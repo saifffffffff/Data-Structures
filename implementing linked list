@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+class node {
+public:
+	node* next;
+	int data;
+};
+
+int main()
+{
+	// allocating the linked list in the stack
+	node Node1;
+	Node1.data = 1;
+	node Node2;
+	Node2.data = 2;
+	node Node3;
+	Node3.data = 3;
+
+	Node1.next = &Node2;
+	Node2.next = &Node3;
+	Node3.next = NULL;
+
+	node *Head = &Node1;
+	while (Head != NULL) {
+		cout << Head->data << endl;
+		Head = Head->next;
+	}
+
+	// allocating the linked list in the heap
+	node* _Node1 = new node();
+	_Node1->data = 1;
+	node* _Node2 = new node();
+	_Node2->data = 2;
+	node* _Node3 = new node();
+	_Node3->data = 3;
+
+	_Node1->next = _Node2;
+	_Node2->next = _Node3;
+	_Node3->next = NULL;
+
+	node* _Head = _Node1;
+	while (_Head != NULL) {
+		cout << _Head->data << endl;
+		_Head = _Head->next;
+	}
+
+	/*
+	 
+	* Use stack allocation for temporary or local linked list nodes.
+	* Use heap allocation (with new) for dynamic linked lists, especially if you’re building them during runtime or across functions.
+	
+	*/
+
+}
