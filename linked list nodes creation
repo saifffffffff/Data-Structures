@@ -1,0 +1,118 @@
+#include <iostream>
+using namespace std;
+class node {
+public:
+	node* next;
+	int data;
+};
+
+void InsertAtBegining(node* & Head, int value) {
+	
+	node* new_node = new node();
+	new_node->data = value;
+	new_node->next = Head;
+	Head = new_node;
+}
+void InsertAfter(node* prev_node, int value){
+	if (prev_node == NULL)
+		return;
+	node* new_node = new node();
+	new_node->data = value;
+	new_node->next = prev_node->next;
+	prev_node->next = new_node;
+}
+void InsertAtEnd(node* &Head, int value) {
+	node* new_node = new node();
+	new_node->data = value;
+	new_node->next = NULL;
+
+	if (Head == NULL)
+	{
+		Head = new_node;
+		return;
+	}
+
+	node* LastNode = Head;
+	while (LastNode->next != NULL) {
+		LastNode = LastNode->next;
+	}
+	LastNode->next = new_node;
+
+}
+node* FindNode(node* Head,int value) {
+	while (Head != NULL) {
+		if (Head->data == value)
+			return Head;
+		Head = Head->next;
+	}
+	return NULL;
+}
+void DeleteNode(node* & Head, int value) {
+	
+	if (Head == NULL) return;
+	node* CurrentNode = Head, *PrevNode = Head;
+
+	if (CurrentNode->data == value)
+	{
+		Head = CurrentNode->next;
+		delete CurrentNode;
+		return;
+	}
+	while (CurrentNode != NULL && CurrentNode->data != value) {
+		PrevNode = CurrentNode;
+		CurrentNode = CurrentNode->next;
+	}
+	if (CurrentNode == NULL) return; // value not found 
+	PrevNode->next = CurrentNode->next;
+	delete CurrentNode;
+}
+void DeleteFirstNode(node*& Head) {
+	if (Head == NULL) return;
+	node* temp = Head;
+	Head = Head->next;
+	delete temp;
+}
+void DeleteLastNode(node* Head) {
+	if (Head == NULL) return;
+	if (Head->next == NULL) {
+		delete Head;
+		Head = NULL;
+		return;
+	}
+
+	node* Current = Head, * Prev = Head;
+	while (Current->next != NULL) {
+		Prev = Current;
+		Current = Current->next;
+	}
+	Prev->next = NULL;
+	delete Current;
+}
+void PrintList(node* Head) {
+	while (Head != NULL) {
+		cout << Head->data << " ";
+		Head = Head->next;
+	}
+	cout << endl;
+}
+
+int main()
+{
+	
+	
+	node* Head = NULL;
+	InsertAtEnd(Head, 1);
+	InsertAtEnd(Head, 2);
+	InsertAtEnd(Head, 3);
+	InsertAtEnd(Head, 4);
+	InsertAtEnd(Head, 5);
+	InsertAtBegining(Head, 19);
+	
+	PrintList(Head);
+	DeleteFirstNode(Head);
+	DeleteLastNode(Head);
+	PrintList(Head);
+
+	
+	
+}
