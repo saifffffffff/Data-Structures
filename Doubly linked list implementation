@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+	int data;
+	node* next, *prev;
+};
+
+
+void InsertAtBegining(node* &Head, int value) {
+	node* new_node = new node();
+	new_node->data = value;
+	new_node->next = Head;
+	new_node->prev = NULL;
+	if (Head != NULL)
+		Head->prev = new_node;
+	Head = new_node;
+
+	
+}
+void InsertAfter(node* prev_node, int value) {
+	if (prev_node == NULL) return;
+	node* new_node = new node();
+	new_node->data = value;
+	new_node->prev = prev_node;
+	new_node->next = prev_node->next;
+	if (prev_node->next != NULL)
+		prev_node->next->prev = new_node;
+	prev_node->next = new_node;
+}
+void InsertAtEnd(node*& Head, int value) {
+	node* new_node = new node();
+	new_node->data = value;
+	new_node->next = NULL;
+	
+	if (Head == NULL) {
+		new_node->prev = NULL;
+		Head = new_node;
+	}
+	else{
+		node* current = Head;
+		while (current->next != NULL) { current = current->next; }
+		current->next = new_node;
+		new_node->prev = current;
+	}
+}
+void DeleteFirstNode(node* &Head) {
+
+	if (Head == NULL || Head->prev != NULL) return;
+	node* temp = Head;
+	Head = Head->next;
+	if(Head != NULL)
+		Head->prev = NULL;
+	
+	delete temp;
+}
+void DeleteLastNode(node* &Head) {
+	if (Head == NULL) return;
+	node* LastNode = Head;
+	
+	while (LastNode->next != NULL) { LastNode = LastNode->next; }
+	
+	if (LastNode->prev != NULL)
+		LastNode->prev->next = NULL;
+	else
+		Head = NULL;
+	delete LastNode;
+}
+void DeleteNode(node*& Head, node* NodeToDelete) {
+	if (Head == NULL || NodeToDelete == NULL) return;
+
+	if (Head == NodeToDelete) {
+		Head = Head->next;
+		Head->prev = NULL;
+	}
+
+	if (NodeToDelete->next != NULL)
+		NodeToDelete->next->prev = NodeToDelete->prev;
+
+	if (NodeToDelete->prev != NULL)
+		NodeToDelete->prev->next = NodeToDelete->next;
+
+	delete NodeToDelete;
+}
+void PrintList(node* Head) {
+	if (Head == NULL)
+	{
+		cout << "Empty" << endl;
+		return;
+	}
+	cout << "NULL <--> ";
+	while (Head != NULL) {
+		cout << Head->data << " <--> ";
+		Head = Head->next;
+	}
+	cout << " NULL";
+}
+node* FindNode(node* Head,int value) {
+	
+	while (Head != NULL) {
+		if (Head->data == value)
+			return Head;
+		Head = Head->next;
+	}
+	return NULL;
+
+}
+int main()
+{
+	
+	node* Head = NULL;
+	InsertAtBegining(Head, 3);
+	InsertAtBegining(Head, 2);
+	InsertAtBegining(Head, 1);
+	
+	DeleteLastNode(Head);
+	DeleteLastNode(Head);
+	DeleteLastNode(Head);
+
+	PrintList(Head);
+	
+}
