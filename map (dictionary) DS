@@ -1,0 +1,61 @@
+include <iostream>
+#include <map>
+using namespace std;
+
+int main()
+{
+	map <string, int> studentGrades;
+	// insertion
+	//first way
+	studentGrades["saif"] = 99;
+	//second way
+	studentGrades.insert({/*key*/"salem",/*value*/89 });
+	// third way
+	studentGrades.insert(pair<string, int>("rami", 12));// pair is a sturct
+	// fourth way
+	studentGrades.insert(make_pair("mazen", 86)); // returns pair struct
+	
+	// iterating using ranged loop
+	for (pair<const string, int> & Pair : studentGrades) { // keys in map are const 
+		cout << "\n__________________________\n";
+		cout << "value : " << Pair.first << endl;
+		cout << "key : " << Pair.second << endl;
+		cout << "__________________________\n";
+	}
+	// or by using iterators
+	map<string, int>::iterator iter;
+	for (iter = studentGrades.begin(); iter != studentGrades.end(); iter++) {
+		cout << "\n__________________________\n";
+		cout << "value : " << iter->first << endl;
+		cout << "key : " << iter->second << endl;
+		cout << "__________________________\n";
+	}
+	// or
+	for (auto & pair : studentGrades) {
+		// code
+	}
+	// check if the key and value exists
+	string key;
+	cout << "Enter a key : ";
+	cin >> key;
+
+	if (studentGrades.find(key) != studentGrades.end())
+	{
+		cout << "found !!\n";
+		cout << "key : " << key << endl;
+		cout << "value : " << studentGrades[key] << endl;
+	}
+	else {
+		cout << "Not found !!";
+	}
+	// deleting in map
+	studentGrades.erase("saif");
+	// or
+	studentGrades.erase(--iter);
+
+	// util methods
+	cout << "size of the map : " << studentGrades.size() << endl;
+	cout << (studentGrades.empty() ? "the map is empty" : "map is not empty") << endl;
+	studentGrades.clear();
+	cout << "map is deleted.";
+}
