@@ -1,0 +1,50 @@
+#include <iostream>
+#include <map>
+using namespace std;
+
+union Number {
+	int Int;
+	float Float;
+	double Double;
+};
+
+int main()
+{
+	
+	Number num;	
+	num.Float = 4.f;
+	cout << "Float is : " << num.Float << endl;
+	num.Double = 3.2;
+	cout << "Double is : " << num.Double << endl;
+	num.Int = 10;
+	cout << "Int is : " << num.Int << endl;
+	
+	// if you tried to access another member it will give you undefined data
+	cout << num.Float << endl;
+	cout << num.Double << endl;
+	/*
+	
+	📦 Memory explanation:
+
+	All members share the same 8 bytes (because double is the largest).
+	
+	When you assign num.Float = 4.f;, the first 4 bytes are filled with float data.
+	
+	Then you assign num.Double = 3.2;, and all 8 bytes are filled.
+	
+	Then num.Int = 10;, which overwrites only the first 4 bytes.
+	
+	When you print num.Double at the end:
+	
+	You’re reading 8 bytes, but only 4 of them were set by the int = 10 line.
+	
+	If the last 4 bytes (from the old double assignment) were not overwritten, they might still hold part of the 3.2 value —	so the output may still look valid.
+	
+	✅ Important: This is just luck
+	You’re not guaranteed that it will always print the correct value.
+	
+	On another computer, compiler, or optimization level, the value could be corrupted.
+
+	*/
+
+}
